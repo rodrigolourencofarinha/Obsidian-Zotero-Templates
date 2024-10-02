@@ -381,7 +381,7 @@ Following the YAML front matter, the template includes **Markdown content** that
 - **Purpose**: Creates a section for notes associated with the item.
 - **Components**:
   - **Header**: `## Notes` denotes a second-level heading in Markdown.
-  - **Content**: `{% persist "notes" %}{% endpersist %}` is a placeholder for persisting notes. The specific functionality depends on the static site generator or processing tool being used.
+  - **Content**: `{% persist "notes" %}{% endpersist %}` is a placeholder for persisting notes. This guarantee that the notes written between the "persistent area" will no be erased when running the import in the future.
 - **Outcome**: Allocates a designated area for adding and storing notes related to the Zotero item.
 
 #### c. Attachment Annotations
