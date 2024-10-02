@@ -59,8 +59,14 @@ authors:
 {%- endfor %}
 {%- endif %}
 {%- if itemType == "email" %}
-recipient:
 {%- if creators.length > 0 %}
+contributor:
+{%- for creator in creators %} 
+{%- if creator.creatorType == "contributor" %} 
+- {% if creator.name %}"[[{{creator.name}}]]"{% else %}"[[{{creator.firstName}} {{creator.lastName}}]]"{% endif %}
+{%- endif %} 
+{%- endfor %}
+recipient:
 {%- for creator in creators %} 
 {%- if creator.creatorType == "recipient" %} 
 - {% if creator.name %}"[[{{creator.name}}]]"{% else %}"[[{{creator.firstName}} {{creator.lastName}}]]"{% endif %}
