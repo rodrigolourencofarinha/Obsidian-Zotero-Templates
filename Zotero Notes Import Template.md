@@ -50,6 +50,12 @@ authors:
 {%- if creator.creatorType == "director" %} 
 - {% if creator.name %}"[[{{creator.name}}]]"{% else %}"[[{{creator.firstName}} {{creator.lastName}}]]"{% endif %}
 {%- endif %}
+{%- if creator.creatorType == "contributor" %} 
+- {% if creator.name %}"[[{{creator.name}}]]"{% else %}"[[{{creator.firstName}} {{creator.lastName}}]]"{% endif %}
+{%- endif %}
+{%- if creator.creatorType == "producer" %} 
+- {% if creator.name %}"[[{{creator.name}}]]"{% else %}"[[{{creator.firstName}} {{creator.lastName}}]]"{% endif %}
+{%- endif %}
 {%- if creator.creatorType == "castMember" %} 
 - {% if creator.name %}"[[{{creator.name}}]]"{% else %}"[[{{creator.firstName}} {{creator.lastName}}]]"{% endif %}
 {%- endif %}
@@ -97,7 +103,7 @@ doi: {{DOI}}
 {%- if itemType != "email" %}
 url: {{url}}
 {%- endif %}
-zotero_location: {{desktopURI}}
+zotero_link: {{desktopURI}}
 file_link: {% if attachments[0] %}file:///{{attachments[0].path | replace(' ', '%20')}}{% endif %}
 {%- if relations.length >0 %}
 related:
@@ -108,7 +114,7 @@ related:
 {%- endfor %}
 {%- endif %}
 ---
-
+{{pdfURI}}
 {%- if itemType == "book" %}
 
 > [!Cite] Reference
@@ -147,12 +153,16 @@ related:
 > {{abstractNote | replace("\n", "\n> ")}}
 
 {%- endif %}
-
 ## Notes
 
 {% persist "notes" %}{% endpersist %}
 
 {% if annotations.length > 0 -%}
+
+## ChatGPT Summary
+
+{% persist "chatgpt" %}{% endpersist %}
+
 ## Attachment Annotations
 {%- endif %} 
 {% for annotation in annotations -%}
