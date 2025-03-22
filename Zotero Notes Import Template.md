@@ -1,6 +1,7 @@
 ---
 aliases: 
 - {% if title %}{{title | replace(':', '') | replace('[', '') | replace(']', '')}}{% elseif caseName%}{{caseName | replace(':', '') | replace('[', '') | replace(']', '')}}{% elseif subject%}{{subject | replace(':', '') | replace('[', '') | replace(']', '')}}{% endif %}
+- {% if bibliography %}{{bibliography | replace(':', '') | replace('[', '') | replace(']', '')| replace('_', '')}}{% endif %}
 tags: 
 - zotero
 {%- if itemType == "email" %}
@@ -28,6 +29,22 @@ tags:
 {%- endif %}
 citekey: {{citationKey}}
 type: {{itemType}}
+{%- if itemType == "interview" %}
+{%- if creators.length > 0 %}
+interviewee:
+{%- for creator in creators %} 
+{%- if creator.creatorType == "interviewee" %} 
+- {% if creator.name %}"[[{{creator.name}}]]"{% else %}"[[{{creator.firstName}} {{creator.lastName}}]]"{% endif %}
+{%- endif %} 
+{%- endfor %}
+interviewer:
+{%- for creator in creators %} 
+{%- if creator.creatorType == "interviewer" %} 
+- {% if creator.name %}"[[{{creator.name}}]]"{% else %}"[[{{creator.firstName}} {{creator.lastName}}]]"{% endif %}
+{%- endif %} 
+{%- endfor %}
+{%- endif %}
+{%- else %}
 {%- if itemType == "instantMessage" %}
 participants:
 {%- if creators.length > 0 %}
@@ -81,6 +98,7 @@ recipient:
 {%- endif %}
 {%- endif %}
 {%- endif %}
+{%- endif %}
 date: {{date | format ("YYYY-MM-DD")}}
 {%- if itemType == "email" %}
 subject: {{subject | replace(':', '') | replace('[', '') | replace(']', '')}}
@@ -103,8 +121,7 @@ doi: {{DOI}}
 {%- if itemType != "email" %}
 url: {{url}}
 {%- endif %}
-zotero_link: {{desktopURI}}
-file_link: {% if attachments[0] %}file:///{{attachments[0].path | replace(' ', '%20')}}{% endif %}
+location: {{desktopURI}}
 {%- if relations.length >0 %}
 related:
 {%- for relation in relations %}
@@ -157,18 +174,18 @@ related:
 
 {% persist "notes" %}{% endpersist %}
 
+## AI Summary
+
+{% persist "summary" %}{% endpersist %}
+
 {% if annotations.length > 0 -%}
-
-## ChatGPT Summary
-
-{% persist "chatgpt" %}{% endpersist %}
 
 ## Attachment Annotations
 {%- endif %} 
 {% for annotation in annotations -%}
 {%- if annotation.comment -%}
 {%- if annotation.annotatedText %}
-<span style="background-color:{{annotation.colorCategory}};color:Black">¶</span> **{{annotation.colorCategory}} {{annotation.type | capitalize}}** - Page [{% if annotation.page %}{{annotation.page}}{% else %}1{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}})
+<span style="background-color:{{annotation.colorCategory}};color:Black">¶</span> **{{annotation.colorCategory}} {{annotation.type | capitalize}}** - {% if pdfLink %}[{% if annotation.page %}Page {{annotation.page}}{%- else %}Page 1{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}}){% else %}[{% if annotation.page %}Page {{annotation.page}}{%- else %}Position{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}}){% endif %}
 
 {%- if annotation.tags.length > 0 %}
 
@@ -186,7 +203,7 @@ related:
 {%- endif -%}
 
 {% if annotation.imageRelativePath %} 
-📊 **Image** - Page [{{annotation.page}}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}})
+📊 **Image** - {% if pdfLink %}[{% if annotation.page %}Page {{annotation.page}}{%- else %}Page 1{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}}){% else %}[{% if annotation.page %}Page {{annotation.page}}{%- else %}Position{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}}){% endif %}
 
 {%- if annotation.tags.length > 0 %}
 
@@ -205,7 +222,7 @@ related:
 {% endif -%}
 
 {% if annotation.type == "note" %} 
-<span style="background-color:{{annotation.colorCategory}};color:Black">◩</span> **{{annotation.colorCategory}} {{annotation.type | capitalize}}** - Page [{% if annotation.page %}{{annotation.page}}{% else %}1{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}})
+<span style="background-color:{{annotation.colorCategory}};color:Black">◩</span> **{{annotation.colorCategory}} {{annotation.type | capitalize}}** - {% if pdfLink %}[{% if annotation.page %}Page {{annotation.page}}{%- else %}Page 1{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}}){% else %}[{% if annotation.page %}Page {{annotation.page}}{%- else %}Position{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}}){% endif %}
 
 {%- if annotation.tags.length > 0 %}
 
