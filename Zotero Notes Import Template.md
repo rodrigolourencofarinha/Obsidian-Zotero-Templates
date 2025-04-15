@@ -185,7 +185,7 @@ related:
 {% for annotation in annotations -%}
 {%- if annotation.comment -%}
 {%- if annotation.annotatedText %}
-<span style="background-color:{{annotation.colorCategory}};color:Black">¶</span> **{{annotation.colorCategory}} {{annotation.type | capitalize}}** - {% if pdfLink %}[{% if annotation.page %}Page {{annotation.page}}{%- else %}Page 1{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}}){% else %}[{% if annotation.page %}Page {{annotation.page}}{%- else %}Position{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}}){% endif %}
+<span style="background-color:{{annotation.colorCategory}};color:Black">✎</span> **{{annotation.colorCategory}} {{annotation.type | capitalize}}** - {% if pdfLink %}[{% if annotation.page %}Page {{annotation.page}}{%- else %}Page 1{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}}){% else %}[{% if annotation.page %}Page {{annotation.page}}{%- else %}Position{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}}){% endif %}
 
 {%- if annotation.tags.length > 0 %}
 
@@ -222,7 +222,7 @@ related:
 {% endif -%}
 
 {% if annotation.type == "note" %} 
-<span style="background-color:{{annotation.colorCategory}};color:Black">◩</span> **{{annotation.colorCategory}} {{annotation.type | capitalize}}** - {% if pdfLink %}[{% if annotation.page %}Page {{annotation.page}}{%- else %}Page 1{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}}){% else %}[{% if annotation.page %}Page {{annotation.page}}{%- else %}Position{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}}){% endif %}
+<span style="background-color:{{annotation.colorCategory}};color:Black">⚑</span> **{{annotation.colorCategory}} {{annotation.type | capitalize}}** - {% if pdfLink %}[{% if annotation.page %}Page {{annotation.page}}{%- else %}Page 1{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}}){% else %}[{% if annotation.page %}Page {{annotation.page}}{%- else %}Position{% endif %}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}}){% endif %}
 
 {%- if annotation.tags.length > 0 %}
 
